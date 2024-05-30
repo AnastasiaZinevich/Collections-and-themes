@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>{{ 'home'|trans }}</title>
+    <!-- Google Translate Element script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ru,fr,de,es', // Добавьте нужные языки через запятую
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+           .container{
+            top: 95px;
+    position: relative;
+    }
+        header {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .search-bar {
+            margin-left: 9px;
+            width: 50%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        .user-icons {
+            display: flex;
+            align-items: center;
+        }
+        .user-icons .icon {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .icon i {
+            margin-right: 5px;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        main {
+            padding-top: 60px;
+            display: flex;
+            justify-content: center;
+        }
+        .pin-container {
+            column-count: 5;
+            column-gap: 10px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .pin {
+            
+            position: relative;
+              min-height: 100px;
+            margin-bottom: 10px;
+            break-inside: avoid;
+            background-color: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .dark-mode .pin {
+    background-color: var(--pin-bg-color-dark, #333); 
+}
+        .pin img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .pin button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e60023;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;
+        }
+        .pin:hover button {
+            display: block;
+        }
+        .pin:hover {
+            transform: scale(1.03);
+        }
+        @media (max-width: 1200px) {
+            .pin-container {
+                column-count: 4;
+            }
+        }
+        @media (max-width: 992px) {
+            .pin-container {
+                column-count: 3;
+            }
+            .search-bar {
+                width: 40%;
+            }
+        }
+        @media (max-width: 768px) {
+            .pin-container {
+                column-count: 2;
+                margin: 70px auto;
+                         
+            }
+            .search-bar {
+                width: 60%;
+            }
+        }
+        @media (max-width: 1159px) {
+            .header-container {
+                flex-direction: column;
+
+            }
+
+            .pin-container{
+                padding-top: 80px!important;
+            }
+            .container{
+            top: 150px;
+    position: relative;
+    }
+            .logo {
+                font-size: 20px;
+            }
+            .search-bar {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            .user-icons {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                background-color: white;
+                position: absolute;
+                top: 110px;
+                left: 0;
+                padding: 10px 0;
+                border-top: 1px solid #ddd;
+            }
+            .user-icons .icon {
+                margin: 10px 0;
+            }
+            .hamburger {
+                display: block;
+            }
+            .user-icons.show {
+                display: flex;
+                margin-top: 20px;
+            }
+        }
+        .pin .pin-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.pin:hover .pin-details {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.pin .pin-details .pin-title {
+    font-weight: bold;
+}
+
+.pin .pin-details .pin-description {
+    font-size: 14px;
+    color: #666;
+}
+
+     .language-switch {
+  position: relative;
+  display: inline-block;
+
+ padding: 3px 12px;
+  cursor: pointer;
+}
+
+.language-switch .arrow {
+  position: absolute;
+  top: 50%;
+ 
+  transform: translateY(-50%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.language-switch.active .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+  @media (max-width: 768px) {
+          
+
+            .pin-container{
+                padding-top: 40px!important;
+            }
+
+  }
+
+
+
+    .dark-mode {
+    background-color: #231f1f;
+}
+
+.dark-mode h2{
+    color: #ffff;
+}
+
+.dark-mode .user-icons .icon{
+    color: #fff;
+}
+.dark-mode .user-icons {
+background-color: black;
+}
+.dark-mode  .header-container{
+    color: #ffff;
+}
+.dark-mode  .logo{
+    color: #ffff;
+}
+.dark-mode  header {
+background-color: black;
+}
+
+ .dark-mode {
+    background-color: #231f1f;
+}
+
+.dark-mode h2{
+    color: #ffff;
+}
+
+.dark-mode .user-icons .icon{
+    color: #fff;
+}
+.dark-mode .user-icons {
+background-color: black;
+}
+.dark-mode  .header-container{
+    color: #ffff;
+}
+.dark-mode  .logo{
+    color: #ffff;
+}
+.dark-mode  header {
+background-color: black;
+}
+    </style>
+</head>
+<body>
+ <header>
+    <div class="header-container">
+        <div class="logo">
+            ANAZI
+        </div>
+        <input type="text" id="searchInput" placeholder="Search" class="search-bar">
+<div class="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+</div>
+        
+     <div class="user-icons">
+    {% if app.session.get('user') %}
+        {% set user = app.session.get('user') %}
+        <a href="{{ path('index') }}" class="icon"><i class="fas fa-home"></i>Home</a>
+        <a href="{{ path('collection_create') }}" class="icon"><i class="fas fa-plus"></i>Create</a>
+        <a href="{{ path('collection_index') }}" class="icon"><i class="fas fa-folder"></i>Collections</a>
+        <div id="google_translate_element" class="icon"></div>
+        <div style="text-decoration: none; font-weight: bold; display: flex; align-items: center;" class="language-switch" onclick="toggleLanguage()">
+            {{ app.request.locale|upper }}
+        </div>
+       <a href="#" class="icon" id="themeToggle"><i class="fas fa-sun"></i></a>
+
+        <a href="{{ path('app_login') }}" class="icon"><i class="fas fa-user"></i>{{ user.email }}</a>
+        {% if 'ROLE_ADMIN' in user.roles %}
+            <a href="{{ path('admin_dashboard') }}" class="icon"><i class="fas fa-cogs"></i>Admin</a>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('app_register') }}" class="icon">Registration</a>
+        <a href="{{ path('app_login') }}" class="icon">Entrance</a>
+    {% endif %}
+</div>
+
+    </div>
+</header>
+ <!-- Отображение списка последних добавленных айтемов -->
+
+<div class="container">
+    <h2 style="font-weight: bold;">Displaying the most recently added items</h2>
+    <div class="row">
+        {% for item in recentItems %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a style="color: #000000; font-weight: bold; font-size: 1.9rem;" class="card-link">{{ item.name }}</a>
+                        </h5>
+                        <p class="card-text" style="margin-bottom: 0rem;">Collection: {{ item.collection.name }}</p>
+                        <p class="card-text" style="margin-bottom: 0rem;">Author: {{ item.collection.author.email }}</p>
+                        <p class="card-text">Tags: {% for tag in item.tags %}#{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                    </div>
+
+                    <form id="editItemForm" method="post" action="{{ path('item_edit_action', {'collectionId': item.collection.id, 'id': item.id}) }}">
+                        <!-- Add form fields here -->
+                    </form>
+                    {%  if app.session.get('user')%}
+                        <form  style="padding-left: 1.25rem; position: relative; top: -10px;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('like') }}">
+                                <a href="{{ path('comment_page', {'itemId': item.id}) }}" class="btn btn-danger" style="background-color: #e60023;">
+                                    <i class="fas fa-comment"></i> Comment
+                                </a>
+                            
+                            </form>
+                            <form method="post" style="padding-left: 1.25rem; position: relative; top: -4px;" action="{{ path('like_action', {'itemId': item.id}) }}" onsubmit="return confirm('Are you sure?');">
+                           <button class="btn btn-success" style="background-color: green;" type="submit">
+                                    <i class="fas fa-thumbs-up"></i> Like ({{ item.getLikesCount() }})
+
+                                </button>
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+        {% if recentItems|length == 0 %}
+            <div class="col-md-12">
+                <p style="font-size: 1.9rem; font-weight: 600; padding-top: 20px;">Your collection is empty.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+ <div class="container"  >                       
+<h2 style="font-weight: bold;">Displaying a list of the 5 largest collections</h2></div>
+
+<!-- Displaying a list of the 5 largest collections -->
+<main>
+
+  <div class="container" style="
+    top: 0;
+"> 
+    <div class="pin-container" style="
+    padding-top: 30px;
+">
+
+        {% if largestCollections is defined and largestCollections|length > 0 %}
+        
+            {% for collection in largestCollections %}
+                <div class="pin">
+                    <a href="{{ path('collection_show', {'id': collection.id}) }}">
+                        <img src="{{ collection.imageUrl ?? '/uploads/BH3I4267.JPG' }}" alt="{{ collection.name }}">
+                        <div class="pin-details">
+                            <div class="pin-title">Name: {{ collection.name }}</div>
+                            <div class="pin-description">Description: {{ collection.description ?? 'No description available' }}</div>
+                            <div class="pin-description">Category: {{ collection.category }}</div>
+                        </div>
+                    </a>
+                  
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No collections available.</p>
+        {% endif %}
+    </div>
+</main>
+
+ </div>
+
+<script>
+function toggleMenu() {
+    const userIcons = document.querySelector('.user-icons');
+    userIcons.classList.toggle('show');
+}
+</script>
+
+
+<script>
+    var currentLanguage = '{{ currentLanguage }}';
+    localStorage.setItem('language', currentLanguage);
+</script>
+
+    <script>
+
+ document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    let isDarkMode = localStorage.getItem('isDarkMode') === 'true'; 
+
+   
+    function setTheme() {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            document.body.classList.remove('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+ 
+    setTheme();
+
+    themeToggle.addEventListener('click', function() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('isDarkMode', isDarkMode); 
+        setTheme(); 
+    });
+});
+        function toggleMenu() {
+            const userIcons = document.querySelector('.user-icons');
+            userIcons.classList.toggle('show');
+        }
+          // Log flash messages to console
+        {% for label, messages in app.session.flashbag.all %}
+            {% for message in messages %}
+                console.log('{{ message|e('js') }}');
+            {% endfor %}
+        {% endfor %}
+    </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

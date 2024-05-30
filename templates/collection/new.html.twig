@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создать коллекцию{% endblock %}
+
+{% block body %}
+    <h1>Создать новую коллекцию</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Создать</button>
+    {{ form_end(form) }}
+    href="{{ path('collection_show', {'id': collection.id}) }}">Назад к списку</a>
+{% endblock %}

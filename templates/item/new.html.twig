@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>{{ 'Create item'|trans }}</title>
+    <!-- Google Translate Element script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ru,fr,de,es', // Добавьте нужные языки через запятую
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    
+    <style>
+     .language-switch {
+  position: relative;
+  display: inline-block;
+
+ padding: 3px 12px;
+  cursor: pointer;
+}
+
+.language-switch .arrow {
+  position: absolute;
+  top: 50%;
+ 
+  transform: translateY(-50%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.language-switch.active .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .form-container a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .search-bar {
+            margin-left: 9px;
+            width: 50%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        .user-icons {
+            display: flex;
+            align-items: center;
+        }
+        .user-icons .icon {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .icon i {
+            margin-right: 5px;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        main {
+            padding-top: 60px;
+            display: flex;
+            justify-content: center;
+        }
+        .pin-container {
+            column-count: 5;
+            column-gap: 10px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .pin {
+            position: relative;
+            margin-bottom: 10px;
+            break-inside: avoid;
+            background-color: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .pin img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .pin button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e60023;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;
+        }
+        .pin:hover button {
+            display: block;
+        }
+        .pin:hover {
+            transform: scale(1.03);
+        }
+        @media (max-width: 1200px) {
+            .pin-container {
+                column-count: 4;
+            }
+        }
+        @media (max-width: 992px) {
+            .pin-container {
+                column-count: 3;
+            }
+            .search-bar {
+                width: 40%;
+            }
+        }
+        @media (max-width: 768px) {
+            .pin-container {
+                column-count: 2;
+                margin: 70px auto;
+            }
+            .search-bar {
+                width: 60%;
+            }
+        }
+        @media (max-width: 1200px) {
+             main {
+            padding-top: 120px;}
+            .header-container {
+                flex-direction: column;
+            }
+              .form-container {
+           
+            margin: 90px auto;
+            
+        }
+            .logo {
+                font-size: 20px;
+            }
+            .search-bar {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            .user-icons {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                background-color: white;
+                position: absolute;
+                top: 110px;
+                left: 0;
+                padding: 10px 0;
+                border-top: 1px solid #ddd;
+            }
+            .user-icons .icon {
+                margin: 10px 0;
+            }
+            .hamburger {
+                display: block;
+            }
+            .user-icons.show {
+                display: flex;
+                top: 130px;
+            }
+        }
+        .pin .pin-details {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .pin:hover .pin-details {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .pin .pin-details .pin-title {
+            font-weight: bold;
+        }
+        .pin .pin-details .pin-description {
+            font-size: 14px;
+            color: #666;
+        }
+        .button-link {
+            color: white;
+            text-decoration: none;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 95%;
+            margin: 50px auto;
+            padding: 30px;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .form-container .form-group {
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            font-weight: bold;
+            color: #555;
+        }
+        .form-container .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+            border-color: #ced4da;
+        }
+        .form-container .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .form-container a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+        .pin-title, .pin-description {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            margin-bottom: 20px;
+        }
+        .pin-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .pin-description {
+            font-size: 16px;
+            color: #555;
+        }
+        .CodeMirror, .editor-toolbar {
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
+        }
+        .editor-toolbar {
+            width: 100%;
+        }
+        .editor-toolbar a {
+            display: inline-block;
+            margin-right: 5px;
+        }
+        @media (max-width: 747px) {
+            
+              .form-container {
+           
+            margin: 90px auto;
+            
+        }
+       
+        }
+        .btn-create {
+  color: black;
+  border: 1px solid black;
+}
+
+.btn-create i {
+  margin-right: 5px;
+}
+ .dark-mode {
+    background-color: #231f1f;
+}
+
+.dark-mode h2{
+    color: #ffff;
+}
+
+.dark-mode .user-icons .icon{
+    color: #fff;
+}
+.dark-mode .user-icons {
+background-color: black;
+}
+.dark-mode  .header-container{
+    color: #ffff;
+}
+.dark-mode  .logo{
+    color: #ffff;
+}
+.dark-mode  header {
+background-color: black;
+}
+    </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+        <div class="logo">
+            ANAZI
+        </div>
+        <input type="text" id="searchInput" placeholder="Search" class="search-bar">
+<div class="hamburger" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+</div>
+        
+       <div class="user-icons">
+    {% if app.session.get('user') %}
+        {% set user = app.session.get('user') %}
+        <a href="{{ path('index') }}" class="icon"><i class="fas fa-home"></i>Home</a>
+        <a href="{{ path('collection_create') }}" class="icon"><i class="fas fa-plus"></i>Create</a>
+        <a href="{{ path('collection_index') }}" class="icon"><i class="fas fa-folder"></i>Collections</a>
+        <div id="google_translate_element" class="icon"></div>
+        <div style="text-decoration: none; color: #333; font-weight: bold; display: flex; align-items: center;" class="language-switch" onclick="toggleLanguage()">
+            {{ app.request.locale|upper }}
+        </div>
+         <a href="#" class="icon" id="themeToggle"><i class="fas fa-sun"></i></a>
+        <a href="{{ path('app_login') }}" class="icon"><i class="fas fa-user"></i>{{ user.email }}</a>
+        {% if 'ROLE_ADMIN' in user.roles %}
+            <a href="{{ path('admin_dashboard') }}" class="icon"><i class="fas fa-cogs"></i>Admin</a>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('app_register') }}" class="icon">Registration</a>
+        <a href="{{ path('app_login') }}" class="icon">Entrance</a>
+    {% endif %}
+</div>
+
+    </div>
+</header>
+    
+<main>
+ <div class="form-container">
+    <h1>Add a new item to the collection: {{ collection.name }}</h1>
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.name, 'Name') }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+<div class="form-group">
+    {{ form_label(form.tags, 'Tags') }}
+    {{ form_widget(form.tags, {'attr': {'class': 'form-control', 'placeholder': 'Enter tags separated by commas'}}) }}
+    {{ form_errors(form.tags) }}
+   
+</div>
+
+   <button class="btn btn-create" style="
+    background-color: #000000;
+">
+  <i class="fas fa-plus" > </i> Create
+</button>
+    {{ form_end(form) }}
+    <a href="{{ path('collection_show', {'id': collection.id}) }}" style="
+    color: #000000;
+">Back to list</a>
+</div>
+        
+</main>
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    let isDarkMode = localStorage.getItem('isDarkMode') === 'true'; 
+
+   
+    function setTheme() {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            document.body.classList.remove('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    }
+
+ 
+    setTheme();
+
+    themeToggle.addEventListener('click', function() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('isDarkMode', isDarkMode); 
+        setTheme(); 
+    });
+});
+
+    function toggleMenu() {
+        const userIcons = document.querySelector('.user-icons');
+        userIcons.classList.toggle('show');
+    }
+    
+    let simplemde;
+
+
+
+  
+   
+    {% for label, messages in app.session.flashbag.all %}
+        {% for message in messages %}
+            console.log('{{ message|e('js') }}');
+        {% endfor %}
+    {% endfor %}
+
+
+</script>
+</body>
+</html>
+

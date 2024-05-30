@@ -3,3 +3,143 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+    methods: [GET, POST]
+
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app_register:
+    path: /register
+    controller: App\Controller\SecurityController::register
+
+
+collection_index:
+  path: /collections
+  controller: App\Controller\CollectionController::index
+  methods: ['GET']
+collection_show:
+    path: /collection/{id}
+    controller: App\Controller\CollectionController::show
+collection_create:
+    path: /collections/create
+    controller: App\Controller\CollectionController::create
+
+collection_edit:
+    path: /collections/{id}/edit
+    controller: App\Controller\CollectionController::edit
+    requirements:
+        id: \d+
+
+collection_delete:
+    path: /collections/{id}/delete
+    controller: App\Controller\CollectionController::delete
+    requirements:
+        id: \d+
+
+
+item_index:
+    path: /collections/{collectionId}/items
+    controller: App\Controller\ItemController::index
+    requirements:
+        collectionId: \d+
+
+item_create:
+    path: /collections/{collectionId}/items/create
+    controller: App\Controller\ItemController::create
+    requirements:
+        collectionId: \d+
+
+item_edit:
+    path: /collection/{collectionId}/item/edit/{id}
+    controller: App\Controller\ItemController::edit
+    requirements:
+        collectionId: \d+
+        id: \d+
+
+item_delete:
+    path: /collections/{collectionId}/items/{itemId}/delete
+    controller: App\Controller\ItemController::delete
+    requirements:
+        collectionId: \d+
+        itemId: \d+
+
+items_edit:
+    path: '/items/edit/{id}'
+    controller: 'App\Controller\CollectionController::edit'
+    methods: ['POST']
+
+item_edit_action:
+    path: '/collection/{collectionId}/item/edit/{id}'
+    controller: 'App\Controller\CollectionController::editItem'
+    methods: ['POST']
+
+
+change_language:
+    path: /change-language
+    controller: App\Controller\LanguageController::changeLanguage
+
+
+like_action:
+    path: '/like/{itemId}'
+    controller: 'App\Controller\LikeController::likeAction'
+    methods: ['POST']
+
+
+comment_page:
+    path: /comment/{itemId}
+    controller: App\Controller\CommentController::commentPage
+    methods: [GET, POST]
+
+
+fetch_comments:
+    path: /comments/{itemId}
+    controller: App\Controller\CommentController::fetchComments
+    methods: [GET]
+
+
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\AdminController::dashboard
+    methods: [GET]
+
+admin_users:
+    path: /admin/users
+    controller: App\Controller\AdminController::manageUsers
+    methods: [GET]
+ 
+
+admin_edit_user:
+    path: /admin/user/{id}/edit
+    controller: App\Controller\AdminController::editUser
+    methods: [GET, POST]
+    requirements:
+        _role: ROLE_ADMIN
+
+admin_delete_user:
+    path: /admin/user/{id}/delete
+    controller: App\Controller\AdminController::deleteUser
+    methods: [GET, POST]
+    requirements:
+        _role: ROLE_ADMIN
+
+admin_toggle_admin:
+    path: /admin/user/{id}/toggle-admin
+    controller: App\Controller\AdminController::toggleAdmin
+    methods: [GET, POST]
+
+
+admin_toggle_block:
+    path: /admin/user/{id}/toggle-block
+    controller: App\Controller\AdminController::toggleBlock
+    methods: [GET, POST]
+    requirements:
+        _role: ROLE_ADMIN

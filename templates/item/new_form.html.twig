@@ -1,0 +1,9 @@
+{# templates/item/new_form.html.twig #}
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.tags) }}
+    {# Add other form fields as needed #}
+
+    <button type="submit" class="btn btn-primary">Create</button>
+{{ form_end(form) }}
